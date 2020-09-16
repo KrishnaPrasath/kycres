@@ -11,8 +11,8 @@ function App() {
     <>
       <MovieProvider>
         <SearchAppBar/>
-        <Route exact path="/" component={() => (<Redirect to='/MovieCart' />)} />
-        <Route component={SpacingGrid} path="/MovieCart"/>
+        <Route exact path="/" component={() => (<Redirect to='/moviecart' />)} />
+        <Route component={SpacingGrid} path="/moviecart"/>
       </MovieProvider>
     </>
     </Router>

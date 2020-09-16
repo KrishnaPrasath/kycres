@@ -40,7 +40,7 @@ export default function SpacingGrid() {
             </>}>
               
             <Grid key={movie.id} item>
-              <Link to={`/MovieCart/Details/${movie.title}`}>
+              <Link to={`/moviecart/${movie.title}/details`}>
               <Card className={classes.paper} onClick={()=>handleClickOpen(movie.id)} >
                 <CardActionArea>
                   <CardMedia
@@ -53,7 +53,7 @@ export default function SpacingGrid() {
                 </CardActionArea>
               </Card>
               </Link>
-              <Route path="/MovieCart/Details/:title" component={AlertDialogSlide}/>
+              <Route path="/moviecart/:title/details" component={AlertDialogSlide}/>
             </Grid>
             </Tooltip>
           ))}
