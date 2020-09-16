@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import {Grid, Card, CardActionArea, CardMedia, Popover, Typography, Tooltip} from '@material-ui/core/';
-import { useMovies, useHover, useUpdateHoverState } from '../contexts/MovieContext';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import {Grid, Card, CardActionArea, CardMedia, Tooltip} from '@material-ui/core/';
+import { useMovies } from '../contexts/MovieContext';
 import AlertDialogSlide from './MovieDialog';
+import { Route, Link } from 'react-router-dom';
+import { useDetail } from '../contexts/MovieContext'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -20,25 +23,14 @@ export default function SpacingGrid() {
   const [spacing, setSpacing] = React.useState(2);
   const classes = useStyles();
   const movies = useMovies();
-
-  const [open, setOpen] = React.useState(false);
-  const [active, setActive] = React.useState([]);
-
-  const handleClickOpen = (id) => {
-    setActive(()=> movies.filter(movie => movie.id === id));
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [open, handleClickOpen, active] = useDetail();
 
   const handleChange = (event) => {
     setSpacing(Number(event.target.value));
   };
 
   return (
-    <Grid container className={classes.root} spacing={2} center alignItems="center" justify="center">
+    <Grid container className={classes.control} spacing={2} center alignItems="center" justify="center">
       <Grid item xs={8}>
         <Grid container justify="center" spacing={spacing}>
           {movies.map((movie) => (
@@ -46,7 +38,9 @@ export default function SpacingGrid() {
             <h1>{movie.title}</h1>
             <p>Rating: { movie.vote_average }</p>
             </>}>
+              
             <Grid key={movie.id} item>
+              <Link to={`/MovieCart/Details/${movie.title}`}>
               <Card className={classes.paper} onClick={()=>handleClickOpen(movie.id)} >
                 <CardActionArea>
                   <CardMedia
@@ -58,7 +52,8 @@ export default function SpacingGrid() {
                   />
                 </CardActionArea>
               </Card>
-              <AlertDialogSlide open={open} handleClose={handleClose} active={active}/>
+              </Link>
+              <Route path="/MovieCart/Details/:title" component={AlertDialogSlide}/>
             </Grid>
             </Tooltip>
           ))}

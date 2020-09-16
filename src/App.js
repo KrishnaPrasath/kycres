@@ -1,21 +1,21 @@
 import React from 'react';
 import './App.css';
 import SearchAppBar from './components/SearchAppBar';
-import Wrapper from './components/Wrapper';
-import AuotGrid from './components/Grid';
 import SpacingGrid from './components/sGrid';
 import { MovieProvider } from './contexts/MovieContext';
-import { Grade } from '@material-ui/icons';
+import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 
 function App() {
   return (
+    <Router>
     <>
       <MovieProvider>
         <SearchAppBar/>
-        {/* <Wrapper/> */}
-        <SpacingGrid/>
+        <Route exact path="/" component={() => (<Redirect to='/MovieCart' />)} />
+        <Route component={SpacingGrid} path="/MovieCart"/>
       </MovieProvider>
     </>
+    </Router>
   );
 }
 

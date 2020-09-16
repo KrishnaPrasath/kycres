@@ -1,10 +1,10 @@
-import { Popover } from '@material-ui/core';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, createContext } from 'react';
 
-const MovieContext = React.createContext();
-const MovieFilterContext = React.createContext();
-const MovieHoverContext = React.createContext();
-const PopContext = React.createContext();
+const MovieContext = createContext();
+const MovieFilterContext = createContext();
+const MovieHoverContext = createContext();
+const PopContext = createContext();
+const DetailContext = createContext();
 
 export function useMovies(){
     return useContext(MovieContext);
@@ -22,25 +22,33 @@ export function useUpdateHoverState(){
     return useContext(PopContext);
 }
 
+export function useDetail(){
+    return useContext(DetailContext);
+}
+
 export function MovieProvider({children}){
 
     const [movies, setMovies] = useState([]);
     const [filteredMovies, setFilteredMovies] = useState([]);
     const [pop, setPop] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [active, setActive] = useState([]);
 
     const filterMovies = (search_str) => {
-        // console.log(search_str, movies);
         let filtMovies = movies.filter( movie => movie.title.toLowerCase().includes(search_str) );
-        console.log(filtMovies)
         return search_str.length > 0 ? setFilteredMovies([...filtMovies]) : setFilteredMovies([...movies]);
     }
 
     
     const handleHoverIn = (key) => { 
         setPop( pop => !pop );
-        console.log("pop");
-        // return movies.filter( movie => movie.id === key  )
      }
+
+     const handleClickOpen = (id) => {
+        setActive(()=> movies.filter(movie => movie.id === id));
+        setOpen(true);
+    };
+
     const handleHoverOut = () => {  }
 
     useEffect(()=>{
@@ -63,7 +71,9 @@ export function MovieProvider({children}){
             <MovieFilterContext.Provider value={filterMovies}>
                 <MovieHoverContext.Provider value={handleHoverIn}>
                     <PopContext.Provider value={pop}>
-                        {children}
+                        <DetailContext.Provider value={ [open, handleClickOpen, active] }>
+                            {children}
+                        </DetailContext.Provider>
                     </PopContext.Provider>
                 </MovieHoverContext.Provider>
             </MovieFilterContext.Provider>
