@@ -23,8 +23,11 @@ npm run start
 
 ```sh
 npm run dev_build
+```
+```sh
 npm run prod_build
 ```
+
 
 
 ## Run tests
@@ -37,7 +40,7 @@ npm run test
 
 👤 **Krishna Prasath**
 
-* Website: KrishnaPrasath.github.io
+* Website: https://krishnaprasath.github.io/
 * Twitter: [@murdoc077](https://twitter.com/murdoc077)
 * Github: [@KrishnaPrasath](https://github.com/KrishnaPrasath)
 * LinkedIn: [@Krishna Prasath Solaisamy](https://linkedin.com/in/Krishna Prasath Solaisamy)
